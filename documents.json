@@ -1,11 +1,52 @@
 [
   {
-    "name": "example",
-    "title": "TODO(author): the first document this industry must produce",
-    "for_each": "select gen_random_uuid() as id, 'Example' as name",
-    "file": "name",
+    "name": "results-table",
+    "title": "Results summary table",
+    "for_each": "select id,code || ' ' || name as label from sites where status='active' and exists (select 1 from samples s where s.site_id=sites.id)",
+    "file": "label",
     "sections": [
-      { "title": "Details", "sql": "select 'replace me' as item, $1::text as record_id" }
+      {
+        "title": "Latest result at each location",
+        "note": "Non-detects show the LOR. Criteria are the guideline sets applied to the site and the limits of its consents. Check every value against the laboratory report.",
+        "sql": "select location,analyte,fraction,sampled_on,result,unit,criteria,case when exceeds then 'OVER' else '' end as over from latest_results where site_id=$1 order by location,analyte"
+      },
+      {
+        "title": "Data quality",
+        "sql": "select rule,finding from compliance_findings where rule like 'POLICY-%' and reference like (select code from sites where id=$1) || '/%' order by rule"
+      }
+    ]
+  },
+  {
+    "name": "consent-compliance",
+    "title": "Consent compliance summary",
+    "for_each": "select id,ref from consents where status='active'",
+    "file": "ref",
+    "sections": [
+      {
+        "title": "Consent",
+        "sql": "select ref,site,regulator,granted_on,expires_on,report_due,lodge_renewal_by,renewal_lodged_on from consent_status where id=$1"
+      },
+      {
+        "title": "Results against the limits, last 12 months",
+        "sql": "select location,sampled_on,analyte,case when detected then value::text else '<' || lor end as result,unit,concat_ws(' to ',limit_low,limit_high) as limit_value,limit_unit,case when exceeds then 'NO' else 'yes' end as complies from result_screen where consent_id=$1 and sampled_on>=current_date-365 order by location,analyte,sampled_on"
+      },
+      {
+        "title": "Exceedances and what was done",
+        "sql": "select sample,sampled_on,analyte,value,unit,coalesce(action,'none recorded') as action,acted_on,action_ref from exceedances where consent_id=$1 order by sampled_on"
+      }
+    ]
+  },
+  {
+    "name": "chain-of-custody",
+    "title": "Sample register",
+    "for_each": "select distinct s.site_id as id,t.code from samples s join sites t on t.id=s.site_id where s.submitted_on is not null",
+    "file": "code",
+    "sections": [
+      {
+        "title": "Samples sent to the lab",
+        "note": "The lab's chain of custody form is the record. This is the register of what went and what has come back.",
+        "sql": "select s.code as sample,coalesce(l.code,'') as location,s.sample_type,s.matrix,s.depth_m,s.sampled_on,s.sampler,s.lab,s.lab_report,s.submitted_on,(select count(*)::int from results r where r.sample_id=s.id) as results_back from samples s left join locations l on l.id=s.location_id where s.site_id=$1 order by s.sampled_on desc,s.code"
+      }
     ]
   }
 ]

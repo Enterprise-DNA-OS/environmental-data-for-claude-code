@@ -13,12 +13,12 @@ That layer used to be the whole product, because talking to a database was hard.
 
 ## What you give up
 
-- **A visual board.** Stages are a table you ask about, not cards you drag.
-- **A phone app.** It runs where Claude Code runs.
+- **Maps and cross sections.** Results are tables you ask about, not plumes on a site plan.
+- **A field app.** Field sheets come in as a CSV or are typed in. It runs where Claude Code runs.
 - **A vendor help desk.** This is open source. Enterprise DNA supports the installed version for businesses that want someone to call.
 
 ## Who this fits
 
-Small teams who already use Claude Code, or who would rather learn to ask than learn another interface. If your team needs a screen to look at all day, keep EQuIS. If you need the answers more than the screens, this is cheaper, faster and yours.
+Consultancies and consent holders with one to fifty people who already use Claude Code, or who would rather learn to ask than learn another interface. If your team needs a screen to look at all day, keep EQuIS. If you need the answers more than the screens, this is cheaper, faster and yours.
 
 Installed and run for you: https://enterprisedna.co/omni/instead-of/equis

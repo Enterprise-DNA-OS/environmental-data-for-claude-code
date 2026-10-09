@@ -1,0 +1,7 @@
+sys_loc_code,sys_sample_code,sample_date,sample_type_code,parent_sample_code,matrix_code,start_depth,lab_name_code,lab_sdg,chemical_name,cas_rn,fraction,result_value,detect_flag,reporting_detection_limit,result_unit,lab_anl_method_name,analysis_date,lab_qualifiers
+SW-DS,KLF-SWDS-E1,03/14/2026 10:30,N,,WS,,HILL,HL-2210,Ammonia as N,,T,0.95,Y,0.01,mg/l,APHA 4500-NH3,03/17/2026,
+SW-DS,KLF-SWDS-E1,03/14/2026 10:30,N,,WS,,HILL,HL-2210,Zinc,7440-66-6,D,0.009,Y,0.001,mg/L,USEPA 6020,03/18/2026,
+SW-DS,KLF-SWDS-E1,03/14/2026 10:30,N,,WS,,HILL,HL-2210,pH (field),,N,7.3,Y,,pH Units,Field meter,03/14/2026,
+BH04,KLF-BH04-E1,03/14/2026 12:00,N,,WG,,HILL,HL-2210,Ammonia as N,,T,15.2,Y,0.01,mg/L,APHA 4500-NH3,03/17/2026,
+BH04,KLF-BH04-E1,03/14/2026 12:00,N,,WG,,HILL,HL-2210,Cadmium,7440-43-9,D,<0.00005,N,,mg/L,USEPA 6020,03/18/2026,
+,KLF-QC-E1,03/14/2026 12:00,FD,KLF-BH04-E1,WG,,HILL,HL-2210,Ammonia as N,,T,14.1,Y,0.01,mg/L,APHA 4500-NH3,03/17/2026,

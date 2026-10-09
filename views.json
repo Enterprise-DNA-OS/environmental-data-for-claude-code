@@ -1,13 +1,56 @@
 [
   {
     "name": "week",
-    "title": "This week",
-    "subtitle": "Environmental Data for Claude Code: what needs attention, rendered by npm run view",
+    "title": "Monitoring week",
+    "subtitle": "Fictional demo data until you import your own results",
     "sections": [
       {
-        "title": "Needs attention",
-        "note": "TODO(author): point this at the industry's attention view (overdue, stuck, quiet).",
-        "sql": "select 'replace me' as item, 'TODO(author)' as why"
+        "title": "Breached or due now",
+        "note": "Rule findings with the rule cited. docs/compliance.md has the source for each.",
+        "sql": "select rule,reference,finding from compliance_findings where severity=1 order by rule,reference"
+      },
+      {
+        "title": "Exceedances in the last 30 days",
+        "sql": "select site,location,sampled_on,analyte,value,unit,set_code as criterion,concat_ws(' to ',limit_low,limit_high) as limit_value,limit_unit,coalesce(action,'') as action from exceedances where sampled_on>=current_date-30 order by set_kind desc,sampled_on desc"
+      },
+      {
+        "title": "Rounds due in the next 14 days",
+        "sql": "select site,location,suite,next_due,days_overdue,consent from monitoring_due where next_due<=current_date+14 order by next_due"
+      },
+      {
+        "title": "Rising",
+        "note": "Latest result at least 50% above the mean of the results before it.",
+        "sql": "select site,location,analyte,latest,previous_mean,change_pct from analyte_trend where change_pct>=50 order by change_pct desc"
+      }
+    ]
+  },
+  {
+    "name": "qa",
+    "title": "Data quality",
+    "subtitle": "Duplicates, blanks, holding times, LORs and results still at the lab",
+    "sections": [
+      {
+        "title": "Field duplicates",
+        "sql": "select site,duplicate,parent,analyte,parent_value,duplicate_value,unit,rpd_pct,limit_pct from duplicate_rpd order by rpd_pct desc"
+      },
+      {
+        "title": "Every QA finding",
+        "sql": "select rule,reference,finding from compliance_findings where rule like 'POLICY-%' order by rule,reference"
+      }
+    ]
+  },
+  {
+    "name": "consents",
+    "title": "Consents and licences",
+    "subtitle": "Reports, renewals and exceedances by consent",
+    "sections": [
+      {
+        "title": "Consents",
+        "sql": "select ref,site,kind,regulator,report_due,days_to_report,expires_on,lodge_renewal_by,renewal_lodged_on,exceedances_12m,not_actioned from consent_status order by report_due"
+      },
+      {
+        "title": "Monitoring the consents require",
+        "sql": "select consent,site,location,suite,every_days,last_sampled,next_due,days_overdue from monitoring_due where consent is not null order by consent,location"
       }
     ]
   }

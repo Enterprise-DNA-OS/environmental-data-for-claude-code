@@ -1,0 +1,12 @@
+[
+  ["Which consent exceedances have we not told the regulator about, and when was each due?", "exceedances"],
+  ["What is rising at any monitoring point compared with its last four results?", "trends"],
+  ["Which consent-required rounds are overdue right now?", "due"],
+  ["Which consents expire inside the window where a late renewal needs the council's permission?", "consents"],
+  ["Which non-detects prove nothing because the LOR is above the guideline?", "screen"],
+  ["Which field duplicates fail our RPD acceptance limit, and on which round?", "duplicates"],
+  ["Which results were analysed outside the holding time and need an estimated flag?", "holding-times"],
+  ["Which samples have been at the lab past our agreed turnaround?", "awaiting"],
+  ["Which results in this lab report are over any criterion that applies at that site?", "screen"],
+  ["Which monitoring reports and annual returns are due in the next 60 days?", "weekly-review"]
+]
